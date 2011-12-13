@@ -1,0 +1,6 @@
+canonical_url: http://arteme.fi
+author: Artem Egorkine
+active_modules: [ blog, tags, pygments ]
+modules:
+    pygments:
+        style: friendly
