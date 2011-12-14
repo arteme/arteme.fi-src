@@ -1,27 +1,37 @@
 
-RSTBLOG = https://github.com/mitsuhiko/rstblog.git
-PACKAGES = pygments
+#REPO = https://github.com/mitsuhiko/rstblog.git
+REPO = git@github.com:arteme/rstblog.git
+EGGS = pygments
 
-ENV = _env
-BIN = $(ENV)/bin
-INSTALLED = $(ENV)/.installed
+RST = _rstblog
+
+BOOTSTRAP = $(RST)/bootstrap.py
+BUILDOUT = $(RST)/bin/buildout
+RUN = $(RST)/bin/run-rstblog
 
 all: serve
 
-env $(INSTALLED):
-	mkdir -p $(ENV)
-	virtualenv --no-site-packages $(ENV)
-	$(BIN)/pip install $(PACKAGES)
-	git clone $(RSTBLOG) $(ENV)/rstblog
-	(cd $(ENV)/rstblog && ../../$(BIN)/python setup.py develop)
-	touch $(INSTALLED)
-	
-build: $(INSTALLED)
-	$(BIN)/python $(BIN)/run-rstblog build
+$(BOOTSTRAP):
+	git clone $(REPO) $(RST)
 
-serve: $(INSTALLED)
-	$(BIN)/python $(BIN)/run-rstblog serve
+$(BUILDOUT): $(BOOTSTRAP)
+	cd $(RST) && python bootstrap.py
+
+$(RUN): $(BUILDOUT)
+	cd $(RST) && bin/buildout -n $(patsubst %,buildout:eggs+=%,$(EGGS))
+
+################################################################
+	
+build: $(RUN)
+	$(RUN) build
+
+serve: $(RUN)
+	$(RUN) serve
 
 clean:
-	rm -rf $(ENV) _build
+	rm -rf _build
+
+distclean: clean
+	rm -rf $(_RST)
+
 
