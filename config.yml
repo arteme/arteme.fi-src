@@ -4,3 +4,4 @@ active_modules: [ blog, tags, pygments ]
 modules:
     pygments:
         style: friendly
+        css_filename: pygments.css
