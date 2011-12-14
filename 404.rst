@@ -1,0 +1,20 @@
+public: yes
+
+==================
+404 |--| Not Found
+==================
+
+The page you are looking for cannot be found. This is likely due to the
+fact that *arteme.fi* website was started anew and the old pages
+were way too old to be of value to anyone.
+
+Please go to `main page </>`_ or the `archive </archive/>`_.
+
+There is of course a possibility that the pages were deleted by mistake.
+Please `contact me </about/>`_ if you cannot find what you were looking
+for.
+
+.. |--| unicode:: U+2013   .. en dash
+.. |---| unicode:: U+2014  .. em dash, trimming surrounding whitespace
+   :trim:
+

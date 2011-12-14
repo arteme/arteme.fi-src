@@ -1,3 +1,4 @@
+DEPLOY = git@github.com:arteme/arteme.github.com.git
 
 #REPO = https://github.com/mitsuhiko/rstblog.git
 REPO = git@github.com:arteme/rstblog.git
@@ -34,4 +35,16 @@ clean:
 distclean: clean
 	rm -rf $(_RST)
 
+################################################################
 
+_deploy/.git/config:
+	git clone $(DEPLOY) _deploy
+
+
+deploy:: _deploy/.git/config build
+	cd _deploy && git ls-files -z | xargs -0 rm -f
+	cp -R _build/* _deploy
+	cp _build/404/index.html _deploy/404.html
+	cd _deploy && git add -A
+	cd _deploy && git commit -m "Update: `date --rfc-3339=seconds`"
+	cd _deploy && git push -n

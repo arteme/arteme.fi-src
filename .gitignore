@@ -1,4 +1,5 @@
 .*.*sw?
 _build
 _rstblog
+_deploy
 
